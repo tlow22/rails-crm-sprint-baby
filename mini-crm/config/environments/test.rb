@@ -50,4 +50,15 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # CORS configuration for test environment - permissive for testing
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'  # Allow all origins for testing flexibility
+      resource '*',
+        headers: :any,
+        methods: :any,
+        credentials: true
+    end
+  end
 end

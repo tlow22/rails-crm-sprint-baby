@@ -87,4 +87,18 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # CORS configuration for production - restrictive and secure
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      # Use environment variable for frontend URL, with fallback
+      origins ENV['FRONTEND_URL'] || 'https://tiny-crm-frontend.netlify.app'
+
+      # Only allow API endpoints, not all resources
+      resource '/api/*',
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head],
+        credentials: false  # More secure in production - no cookies/auth headers
+    end
+  end
 end
