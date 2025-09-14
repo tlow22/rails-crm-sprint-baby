@@ -1,45 +1,46 @@
 # Repository Guidelines
 
+## Project Overview
+- Tiny CRM: Rails 7+ API‑only backend with PostgreSQL, React frontend in `frontend/` or `client/` within this repo.
+- Domain: Contacts have many Notes. JSON responses only; API namespace `/api/v1`.
+
 ## Project Structure & Module Organization
-- Rails layout is assumed:
-  - `app/` (models, controllers, views, jobs, services)
-  - `config/` (environment, routes, credentials)
-  - `db/` (migrations, schema)
-  - `lib/` (framework‑agnostic helpers)
-  - `spec/` or `test/` (unit/integration tests)
-  - Frontend assets in `app/assets/` or `app/javascript/` (if using JS bundling)
+- Rails:
+  - `app/`, `config/`, `db/`, `lib/`, `spec/` or `test/`
+- Frontend: `frontend/` or `client/` (React app)
+- Services/jobs live in `app/services/` and `app/jobs/`.
 
 ## Build, Test, and Development Commands
-- Setup: `bin/setup` (preferred). If unavailable: `bundle install && bin/rails db:setup`
-- Run server: `bin/rails s` (Rails app on `http://localhost:3000`)
-- Console: `bin/rails c` (quickly inspect models and services)
-- Tests:
-  - RSpec: `bundle exec rspec` (when `spec/` exists)
-  - Minitest: `bin/rails test` (when `test/` exists)
-- Lint/format (if configured): `bundle exec rubocop -A` and `bundle exec standardrb`
+- Setup: `bin/setup` or `bundle install && bin/rails db:setup`
+- DB lifecycle: `bin/rails db:create db:migrate db:seed`
+- Server/console: `bin/rails s` at `http://localhost:3000`, `bin/rails c`
+- Tests: RSpec `bundle exec rspec` or Minitest `bin/rails test`
+- Lint/format: `bundle exec rubocop -A` or `bundle exec standardrb`
+
+## API Surface
+- Contacts: `GET/POST /api/v1/contacts`, `GET/PATCH/DELETE /api/v1/contacts/:id`
+- Notes (nested): `GET/POST /api/v1/contacts/:contact_id/notes`, `PATCH/DELETE /api/v1/contacts/:contact_id/notes/:id`
 
 ## Coding Style & Naming Conventions
 - Ruby: 2‑space indent; `snake_case` for methods/files; `CamelCase` for classes/modules.
-- Rails: models singular (e.g., `User`), controllers plural (e.g., `UsersController`).
-- Migrations: timestamped names like `YYYYMMDDHHMMSS_add_index_to_users.rb`.
-- Services/queries: place in `app/services/` and name as verbs (e.g., `Accounts::SyncJob`).
+- Rails: models singular (`Contact`, `Note`), controllers plural (`ContactsController`).
+- Routes: namespace under `/api/v1`; enable CORS for frontend.
+- Migrations: `YYYYMMDDHHMMSS_description.rb`. Use ActiveRecord scopes for search/filtering.
 
 ## Testing Guidelines
-- Prefer fast unit tests; add feature/system tests for flows.
-- Naming:
-  - RSpec: files end with `_spec.rb`; describe classes and public behavior.
-  - Minitest: files end with `_test.rb`; group by component.
-- Run specific tests: `bundle exec rspec path/to/file_spec.rb:42` or `bin/rails test TEST=path/to/file_test.rb`.
-- Aim to add tests with every change; do not reduce existing coverage.
+- Add tests for new behavior; do not reduce coverage.
+- File names: RSpec `*_spec.rb`, Minitest `*_test.rb`.
+- Run specific: `bundle exec rspec path/to/file_spec.rb:42` or `bin/rails test TEST=path/to/file_test.rb`.
 
 ## Commit & Pull Request Guidelines
-- Use clear, imperative subjects: "Add accounts sync job".
-- Recommended format (Conventional Commits): `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`.
-- PRs should include:
-  - Purpose and scope; link issues (e.g., `Closes #123`).
-  - Screenshots for UI changes; sample requests/responses for API changes.
-  - Migration notes and rollback strategy when applicable.
+- Imperative subjects: "Add contacts search scope".
+- Prefer Conventional Commits: `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`.
+- PRs: purpose/scope, linked issues (`Closes #123`), screenshots for UI, sample API requests, migration/rollback notes if relevant.
 
 ## Security & Configuration Tips
-- Do not commit secrets. Use Rails credentials or `.env` (git‑ignored) for local dev.
-- Document required env vars in `README` or `.env.example`.
+- Never commit secrets; use Rails credentials or `.env` (git‑ignored). Provide `.env.example` when needed.
+- Configure CORS for the React origin.
+
+## Agent‑Specific Instructions
+- Teach as you code: briefly explain changes and trade‑offs.
+- Delegate framework commands (e.g., generators, installs) to the user when possible to reinforce learning.
