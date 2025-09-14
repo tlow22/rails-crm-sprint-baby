@@ -1,14 +1,65 @@
-#.env files
+# Rails specific gitignore patterns
+
+# Environment files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-#node_modules
-node_modules
+# Rails app artifacts
+mini-crm/log/*
+mini-crm/tmp/*
+mini-crm/storage/*
+!mini-crm/log/.keep
+!mini-crm/tmp/.keep
+!mini-crm/storage/.keep
 
-#yarn
+# Rails credentials and keys
+mini-crm/config/master.key
+mini-crm/config/credentials/*.key
+
+# Rails cache
+mini-crm/tmp/cache/
+mini-crm/tmp/pids/
+mini-crm/tmp/sockets/
+
+# Database files (development/test)
+mini-crm/*.sqlite3
+mini-crm/*.sqlite3-*
+
+# Rails generators and uploads
+mini-crm/public/uploads/
+mini-crm/public/system/
+
+# Bundler
+mini-crm/vendor/bundle/
+mini-crm/.bundle/
+
+# Node.js / frontend artifacts
+node_modules/
+frontend/node_modules/
+frontend/build/
+frontend/dist/
 yarn.lock
-# Ignore master key for decrypting credentials and more.
-/config/master.key
+package-lock.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Deployment
+mini-crm/.kamal/secrets
+mini-crm/config/deploy.yml
