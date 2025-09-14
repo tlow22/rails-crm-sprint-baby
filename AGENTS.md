@@ -1,14 +1,16 @@
 # Repository Guidelines
 
 ## Project Overview
-- Tiny CRM: Rails 7+ API‑only backend with PostgreSQL, React frontend in `frontend/` or `client/` within this repo.
+- Tiny CRM: Rails 8+ API-only backend with PostgreSQL, React frontend in `frontend/` or `client/` within this repo.
 - Domain: Contacts have many Notes. JSON responses only; API namespace `/api/v1`.
+- Models: Contact(first_name, last_name, email unique, phone, company, tags, next_follow_up_date); Note(content, pinned, contact_id).
 
 ## Project Structure & Module Organization
 - Rails:
   - `app/`, `config/`, `db/`, `lib/`, `spec/` or `test/`
 - Frontend: `frontend/` or `client/` (React app)
 - Services/jobs live in `app/services/` and `app/jobs/`.
+- Suggested stack: React + React Router, Tailwind CSS, Vite/CRA.
 
 ## Build, Test, and Development Commands
 - Setup: `bin/setup` or `bundle install && bin/rails db:setup`

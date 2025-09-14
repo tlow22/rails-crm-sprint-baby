@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **Tiny CRM** application - a full-stack CRUD web app for managing contacts and notes. The project is designed as a **learning experience** for the human developer to understand Rails API + React integration. The architecture consists of:
 
-- **Backend**: Rails 7+ API-only mode with PostgreSQL database
-- **Frontend**: React application (in this monorepo under `frontend/` or `client/`)
+- **Backend**: Rails 8 application in `mini-crm/` directory with PostgreSQL database
+- **Frontend**: React application (planned in `frontend/` directory)
 - **Database**: PostgreSQL with `contacts` and `notes` tables (one-to-many relationship)
 - **Timeline**: Weekend project focusing on core CRUD functionality first
 
