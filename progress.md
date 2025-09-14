@@ -26,33 +26,59 @@
 
 ---
 
-## Phase 2: Database & Models 🚧
+## Phase 2: Database & Models ✅
 
-### Current Status: IN PROGRESS
-**Blocker:** PostgreSQL connection issue - server not running locally
+### Completed Tasks
+- [x] **PostgreSQL Setup** - Docker PostgreSQL container configured and running
+- [x] **Database Creation** - Database connection established (verified with DBeaver)
+- [x] **Docker Orchestration** - docker-compose.yml and Makefile created
+- [x] **Environment Variables** - .env configuration for database credentials
+- [x] **Developer Documentation** - README.md with setup instructions
 
-### Pending Tasks
-- [ ] **PostgreSQL Setup** - Install and start PostgreSQL service
-- [ ] **Database Creation** - Run `bin/setup` or `bin/rails db:create`
-- [ ] **Contact Model** - Generate model with fields: first_name, last_name, email, phone, company, tags, next_follow_up_date
-- [ ] **Note Model** - Generate model with fields: content, pinned, contact_id (foreign key)
-- [ ] **Associations** - Set up Contact has_many :notes, Note belongs_to :contact
-- [ ] **Validations** - Add ActiveRecord validations (required fields, email uniqueness)
-- [ ] **Database Migration** - Run migrations to create tables
+### Technical Decisions Made
+- ✅ **PostgreSQL via Docker** - Containerized database for consistent development
+- ✅ **Make + Docker Compose** - Developer workflow with simple commands
+- ✅ **Monorepo structure** - All services orchestrated from root directory
 
-### Technical Decisions Needed
-- [ ] PostgreSQL installation method (Homebrew vs Docker vs Postgres.app)
+### Completed Tasks
+- [x] **Contact Model** - Generated with fields: first_name, last_name, email, phone, company, tags, next_follow_up_date
+- [x] **Note Model** - Generated with fields: content, pinned, contact_id (foreign key)
+- [x] **Associations** - Set up Contact has_many :notes, Note belongs_to :contact
+- [x] **Validations** - Added ActiveRecord validations (required fields, email uniqueness, content presence)
+- [x] **Database Migration** - Ran migrations, created tables successfully
+- [x] **Model Methods** - Added helper methods (full_name, display_name, pinned?, toggle_pin!)
+- [x] **Query Scopes** - Added scopes for pinned, unpinned, recent notes
+
+### Database Schema Created
+**Contacts Table:**
+- first_name, last_name, email (unique), phone, company, tags, next_follow_up_date
+- Validations: required names/email, unique email, email format validation
+
+**Notes Table:**
+- content (required, 1-10,000 chars), pinned (boolean), contact_id (foreign key)
+- Foreign key constraint with dependent: :destroy
+
+### Learning Achievements
+- ✅ **Rails Generators** - Used `rails generate model` with field specifications
+- ✅ **ActiveRecord Associations** - Bidirectional has_many/belongs_to relationships
+- ✅ **Database Migrations** - Understanding migration vs database creation
+- ✅ **Model Validations** - Business rules and data integrity
+- ✅ **Query Scopes** - Custom database query methods
+- ✅ **Docker Integration** - Rails connecting to containerized PostgreSQL
 
 ---
 
-## Phase 3: Rails Controllers & Views 📋
+## Phase 3: Rails Controllers & Views 🚧
 
-### Planned Tasks
+### Current Status: READY FOR CONTROLLERS AND VIEWS
+
+### Next Tasks
 - [ ] **Contact Scaffold** - Generate complete CRUD interface with `rails generate scaffold`
-- [ ] **Note Scaffold** - Generate nested resource under contacts
+- [ ] **Note Controllers** - Generate nested resource under contacts
 - [ ] **Routes Configuration** - Set up nested routes for notes under contacts
 - [ ] **Seed Data** - Create sample contacts and notes for testing
 - [ ] **Basic Styling** - Apply minimal styling to generated views
+- [ ] **Test Web Interface** - Verify CRUD operations work in browser
 
 ---
 
