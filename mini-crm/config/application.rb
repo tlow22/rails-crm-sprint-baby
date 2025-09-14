@@ -16,6 +16,17 @@ module MiniCrm
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # CORS configuration for API
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'localhost:3001', 'localhost:3000', '127.0.0.1:3001', '127.0.0.1:3000'
+        resource '*',
+          headers: :any,
+          methods: [:get, :post, :put, :patch, :delete, :options, :head],
+          credentials: true
+      end
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
