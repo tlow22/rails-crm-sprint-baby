@@ -68,28 +68,51 @@
 
 ---
 
-## Phase 3: Rails Controllers & Views 🚧
+## Phase 3: JSON API Controllers & Views 🚧
 
-### Current Status: READY FOR CONTROLLERS AND VIEWS
+### Current Status: READY FOR API LAYER DEVELOPMENT
 
-### Next Tasks
-- [ ] **Contact Scaffold** - Generate complete CRUD interface with `rails generate scaffold`
-- [ ] **Note Controllers** - Generate nested resource under contacts
-- [ ] **Routes Configuration** - Set up nested routes for notes under contacts
-- [ ] **Seed Data** - Create sample contacts and notes for testing
-- [ ] **Basic Styling** - Apply minimal styling to generated views
-- [ ] **Test Web Interface** - Verify CRUD operations work in browser
+### Next Tasks (API-First Approach)
+- [ ] **API Controllers** - Generate controllers that return JSON responses
+- [ ] **Jbuilder Templates** - Create `.json.jbuilder` files for structured JSON output
+- [ ] **API Routes** - Configure nested routes under `/api/v1` namespace
+- [ ] **Seed Data** - Create sample contacts and notes for API testing
+- [ ] **CORS Configuration** - Enable cross-origin requests for React frontend
+- [ ] **API Testing** - Test endpoints with curl/Postman/Insomnia
+
+### API Endpoints to Implement
+**Contacts API:**
+- `GET /api/v1/contacts` - List all contacts
+- `POST /api/v1/contacts` - Create new contact
+- `GET /api/v1/contacts/:id` - Show specific contact
+- `PATCH /api/v1/contacts/:id` - Update contact
+- `DELETE /api/v1/contacts/:id` - Delete contact
+
+**Notes API (nested):**
+- `GET /api/v1/contacts/:contact_id/notes` - List contact's notes
+- `POST /api/v1/contacts/:contact_id/notes` - Create note
+- `GET /api/v1/contacts/:contact_id/notes/:id` - Show note
+- `PATCH /api/v1/contacts/:contact_id/notes/:id` - Update note
+- `DELETE /api/v1/contacts/:contact_id/notes/:id` - Delete note
+
+### Learning Goals for Phase 3
+- **JSON API design patterns** - RESTful endpoints with consistent responses
+- **Jbuilder templates** - Structured JSON generation
+- **Nested resources** - Parent-child relationships in URLs
+- **API testing workflow** - Using tools other than browser forms
+- **CORS configuration** - Preparing for frontend integration
 
 ---
 
-## Phase 4: API Layer 📋
+## Phase 4: Advanced API Features 📋
 
-### Planned Tasks
-- [ ] **API Namespace** - Create `/api/v1` namespace in routes
-- [ ] **API Controllers** - Build JSON-only controllers for contacts and notes
-- [ ] **CORS Configuration** - Enable CORS for future React frontend
-- [ ] **API Testing** - Test endpoints with curl/Postman
-- [ ] **Error Handling** - Implement consistent JSON error responses
+### Planned Tasks (After Basic API is Complete)
+- [ ] **Search & Filtering** - Add query parameters for contact search
+- [ ] **Pagination** - Implement pagination for large datasets
+- [ ] **Error Handling** - Comprehensive JSON error responses with proper HTTP status codes
+- [ ] **Authentication** - Add JWT or session-based auth (stretch goal)
+- [ ] **API Documentation** - Generate API docs or create manual documentation
+- [ ] **Performance Optimization** - Add database indexes and query optimization
 
 ---
 
@@ -139,20 +162,23 @@
 
 ---
 
-## Current Blocker
+## Current Status: Phase 2 Complete ✅
 
-**Issue:** PostgreSQL connection failure
-**Error:** `connection to server on socket "/tmp/.s.PGSQL.5432" failed`
-**Next Step:** Install and start PostgreSQL service locally
+**Major Milestone Achieved:** Database and Models fully implemented and tested
 
-**Options to resolve:**
-1. Install via Homebrew: `brew install postgresql@15 && brew services start postgresql@15`
-2. Use Docker container: `docker run --name postgres-crm -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:15`
-3. Use Postgres.app for macOS
+### Next Immediate Steps:
+1. **Generate API controllers** for Contacts and Notes
+2. **Create Jbuilder templates** for JSON responses
+3. **Configure API routes** under `/api/v1` namespace
+4. **Add seed data** for API testing
+5. **Test API endpoints** with curl/Postman
 
 ---
 
 ## Session Notes
-- **Learning approach confirmed:** Prioritizing understanding over speed
-- **Architecture decisions made:** Full Rails + React monorepo structure
-- **Next immediate task:** Resolve PostgreSQL connection to proceed with database setup
+- **Docker PostgreSQL setup:** Successfully connected Rails to containerized database
+- **Model relationships:** Contact has_many Notes with proper foreign keys and validations
+- **Rails generators mastery:** Learned model generation with field specifications
+- **Database architecture:** Understanding of migrations vs database creation
+- **API-first approach:** Shifted to JSON API development for modern full-stack architecture
+- **Ready for Phase 3:** JSON API controllers with Jbuilder templates

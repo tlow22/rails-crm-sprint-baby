@@ -18,6 +18,7 @@ This is a **Tiny CRM** application - a full-stack CRUD web app for managing cont
 - **Delegate framework commands**: Ask the user to run `bin/rails generate`, `bundle install`, etc. so they learn the Rails workflow
 - **Explain architectural decisions**: Help the user understand Rails conventions and patterns
 - **Show alternatives**: When possible, mention different approaches and trade-offs
+- **API-first mindset**: Focus on JSON responses over HTML views for modern full-stack architecture
 
 ## Development Commands
 
@@ -41,12 +42,33 @@ This is a **Tiny CRM** application - a full-stack CRUD web app for managing cont
 
 - Linting/formatting: `bundle exec rubocop -A` or `bundle exec standardrb`
 
+### API Testing
+
+- **API testing**: Use curl, Postman, or Insomnia for endpoint testing
+- **Rails console**: `bin/rails c` for model and data testing
+- **Development API access**: All endpoints available at `http://localhost:3000/api/v1`
+
 ## API Architecture
 
 ### RESTful Endpoints (under `/api/v1`)
 
-- **Contacts**: `/api/v1/contacts` - CRUD operations for contacts
-- **Notes**: `/api/v1/contacts/:contact_id/notes` - CRUD operations for notes (nested under contacts)
+**Contacts API:**
+```
+GET    /api/v1/contacts           # List all contacts
+POST   /api/v1/contacts           # Create contact
+GET    /api/v1/contacts/:id       # Show contact
+PATCH  /api/v1/contacts/:id       # Update contact
+DELETE /api/v1/contacts/:id       # Delete contact
+```
+
+**Notes API (nested under contacts):**
+```
+GET    /api/v1/contacts/:contact_id/notes     # List contact's notes
+POST   /api/v1/contacts/:contact_id/notes     # Create note for contact
+GET    /api/v1/contacts/:contact_id/notes/:id # Show specific note
+PATCH  /api/v1/contacts/:contact_id/notes/:id # Update note
+DELETE /api/v1/contacts/:contact_id/notes/:id # Delete note
+```
 
 ### Key Models
 
@@ -68,10 +90,12 @@ This is a **Tiny CRM** application - a full-stack CRUD web app for managing cont
 - Pin/unpin important notes
 
 **Technical Requirements**
-- CORS configuration for React frontend
-- JSON responses only
-- RESTful API design under `/api/v1`
-- Seed file to populate sample data
+- **JSON API responses** - All endpoints return JSON using Jbuilder templates
+- **CORS configuration** - Enable cross-origin requests for React frontend
+- **RESTful API design** - All endpoints under `/api/v1` namespace
+- **Jbuilder templates** - Structured JSON responses (`.json.jbuilder` files)
+- **Error handling** - Consistent JSON error responses
+- **Seed file** - Sample data for development and testing
 
 ### UI/UX Goals (Frontend)
 - Contact list (table or cards) with search box and "New Contact" button
@@ -110,9 +134,10 @@ This is a **Tiny CRM** application - a full-stack CRUD web app for managing cont
 
 ### Code Style
 - **Ruby**: 2-space indentation, snake_case for methods/files, CamelCase for classes/modules
-- **JSON responses only** (API-only mode)
+- **JSON API architecture**: All endpoints return JSON using Jbuilder templates
 - **ActiveRecord scopes** for search functionality
 - **Route namespacing**: All API routes under `/api/v1/`
+- **Jbuilder templates**: Use `.json.jbuilder` for consistent JSON structure
 
 ### Testing Strategy
 - **Add tests for all new functionality** - aim to not reduce existing coverage
@@ -153,10 +178,40 @@ This is a **Tiny CRM** application - a full-stack CRUD web app for managing cont
 This is a **greenfield learning project** designed to be completed in a weekend.
 
 **Immediate priorities:**
-1. Set up Rails API-only application
-2. Create Contact and Note models with proper associations
-3. Build RESTful controllers with JSON responses
-4. Add basic validations and seed data
-5. Configure CORS for future frontend integration
+1. ✅ Set up Rails application with PostgreSQL
+2. ✅ Create Contact and Note models with proper associations
+3. **Build JSON API controllers** with Jbuilder templates
+4. **Configure API routes** under `/api/v1` namespace
+5. **Add seed data** for development testing
+6. **Set up CORS** for React frontend integration
 
-**Development flow**: Start with backend CRUD, add search functionality, then create the React frontend in a `frontend/` or `client/` directory within this repo.
+**Development flow**: Backend models (✅) → JSON API layer → React frontend → Polish & features
+
+## JSON API Development Guide
+
+### Controller Structure
+- **Inherit from ApplicationController** (not ActionController::API for learning)
+- **Return JSON responses** using Jbuilder templates
+- **Handle errors consistently** with JSON error responses
+- **Use strong parameters** for security
+
+### Jbuilder Templates
+- **Location**: `app/views/api/v1/contacts/` and `app/views/api/v1/notes/`
+- **Naming**: `index.json.jbuilder`, `show.json.jbuilder`, etc.
+- **Structure**: Consistent JSON format across all endpoints
+- **Associations**: Include related data when needed
+
+### Example API Response Structure
+```json
+{
+  "contact": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "full_name": "John Doe",
+    "notes_count": 3,
+    "created_at": "2024-09-14T21:47:21Z"
+  }
+}
+```
