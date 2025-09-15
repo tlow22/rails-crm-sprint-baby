@@ -19,7 +19,7 @@ class Api::V1::ContactsController < ApplicationController
     if @contact.save
       render json: @contact, status: :created
     else
-      render json: { errors: @contact.errors }, status: :unprocessable_entity
+      render json: { errors: @contact.errors }, status: :unprocessable_content
     end
   end
 
@@ -28,7 +28,7 @@ class Api::V1::ContactsController < ApplicationController
     if @contact.update(contact_params)
       render json: @contact
     else
-      render json: { errors: @contact.errors }, status: :unprocessable_entity
+      render json: { errors: @contact.errors }, status: :unprocessable_content
     end
   end
 
